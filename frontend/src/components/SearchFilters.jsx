@@ -13,9 +13,20 @@ export default function SearchFilters({ onSearch }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    const processedInput = { ...input };
+
+    ["calories", "rating", "total_time"].forEach((key) => {
+      const val = processedInput[key].trim();
+      if (val && !/^([<>]=?|=)/.test(val)) {
+        processedInput[key] = "=" + val;
+      }
+    });
+
     const filters = Object.fromEntries(
-      Object.entries(input).filter(([_, v]) => v.trim())
+      Object.entries(processedInput).filter(([_, v]) => v.trim())
     );
+
     onSearch(filters);
   };
 

@@ -9,10 +9,10 @@ export const getRecipes = async (page = 1, limit = 15) => {
   return res.data;
 };
 
-export const searchRecipes = async (filters) => {
+export const searchRecipes = async (filters, page = 1, limit = 15) => {
   const params = new URLSearchParams(filters).toString();
   console.log(`Making search API call at ${BASE_URL}/search?${params}`);
-  const res = await axios.get(`${BASE_URL}/search?${params}`);
+  const res = await axios.get(`${BASE_URL}/search?${params}&page=${page}&limit=${limit}`);
   console.log("Search API response:", res);
   return res.data;
 };

@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const data = isSearching
-        ? await searchRecipes(filters)
+        ? await searchRecipes(filters, page, limit)
         : await getRecipes(page, limit);
       setRecipes(data.data || []);
       setTotal(data.total || 0);

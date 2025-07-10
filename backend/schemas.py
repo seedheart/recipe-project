@@ -23,6 +23,3 @@ class PaginatedRecipeListOut(BaseModel):
     limit: int
     total: int
     data: List[RecipeOut]
-
-class RecipeListOut(BaseModel):
-    data: List[RecipeOut]

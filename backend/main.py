@@ -6,9 +6,18 @@ from sqlalchemy.orm import Session
 from sqlalchemy import and_, cast, Float, func
 from database import SessionLocal
 from models import Recipe
-from schemas import PaginatedRecipeListOut, RecipeListOut
+from schemas import PaginatedRecipeListOut
 from typing import Optional
 import re
+import operator
+
+ops = {
+    "<": operator.lt,
+    "<=": operator.le,
+    "=": operator.eq,
+    ">=": operator.ge,
+    ">": operator.gt
+}
 
 app = FastAPI()
 
@@ -62,7 +71,7 @@ def get_recipes(
         "data": recipes
     }
 
-@app.get("/api/recipes/search", response_model=RecipeListOut)
+@app.get("/api/recipes/search", response_model=PaginatedRecipeListOut)
 def search_recipes(
     calories: Optional[str] = Query(None),
     rating: Optional[str] = Query(None),
@@ -84,19 +93,19 @@ def search_recipes(
             r'[^0-9.]', '', 'g'
         )
         expr = cast(calories_text, Float)
-        filters.append(eval(f"expr {op} val"))
+        filters.append(ops[op](expr, val))
 
     # Rating
     if parsed := parse_expression(rating):
         op, val = parsed
         expr = Recipe.rating
-        filters.append(eval(f"expr {op} val"))
+        filters.append(ops[op](expr, val))
 
     # Total Time
     if parsed := parse_expression(total_time):
         op, val = parsed
         expr = Recipe.total_time
-        filters.append(eval(f"expr {op} val"))
+        filters.append(ops[op](expr, val))
 
     # Title search (case-insensitive)
     if title:
@@ -107,6 +116,7 @@ def search_recipes(
         filters.append(Recipe.cuisine == cuisine)
 
     skip = (page - 1) * limit
+    total = db.query(func.count(Recipe.id)).filter(and_(*filters)).scalar()
 
     recipes = (
         db.query(Recipe)
@@ -118,5 +128,8 @@ def search_recipes(
     )
 
     return {
+        "page": page,
+        "limit": limit,
+        "total": total,
         "data": recipes
     }
