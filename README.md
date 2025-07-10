@@ -111,31 +111,33 @@ GET /api/recipes?page=1&limit=10
 {
   "page": 1,
   "limit": 10,
-  "total": 50
+  "total": 8244,
   "data": [
     {
-      "id": 1,
-      "title": "Sweet Potato Pie",
-      "cuisine": "Southern Recipes",
-      "rating": 4.8,
-      "prep_time": 15,
-      "cook_time": 100,
-      "total_time": 115,
-      "description": "Shared from a Southern recipe...",
+      "id": 337,
+      "title": "Fresh Peach Cake",
+      "cuisine": "Peach Desserts",
+      "rating": 5,
+      "prep_time": 20,
+      "cook_time": 40,
+      "total_time": 60,
+      "description": "This is a quick and easy peach cake made with fresh peaches. Perfect when you're getting a case of peaches from the market.",
       "nutrients": {
-        "calories": "389 kcal",
-        "carbohydrateContent": "48 g",
-        "cholesterolContent": "78 mg",
-        "fiberContent": "3 g",
-        "proteinContent": "5 g",
-        "saturatedFatContent": "10 g",
-        "sodiumContent": "254 mg",
-        "sugarContent": "28 g",
-        "fatContent": "21 g"
+        "calories": "183 kcal",
+        "fatContent": "9 g",
+        "fiberContent": "0 g",
+        "sugarContent": "17 g",
+        "sodiumContent": "55 mg",
+        "proteinContent": "2 g",
+        "cholesterolContent": "51 mg",
+        "carbohydrateContent": "25 g",
+        "saturatedFatContent": "5 g",
+        "unsaturatedFatContent": "0 g"
       },
-      "serves": "8 servings"
-    }
-  ],
+      "serves": "12 servings"
+    },
+    ...
+  ]
 }
 ```
 
@@ -174,31 +176,31 @@ GET /api/recipes/search?title=pie&rating=>=4.5&calories=<=400&page=1&limit=15
 {
   "page": 1,
   "limit": 15,
-  "total": 50
+  "total": 78,
   "data": [
     {
-      "id": 1,
-      "title": "Sweet Potato Pie",
-      "cuisine": "Southern Recipes",
-      "rating": 4.8,
-      "prep_time": 15,
-      "cook_time": 100,
-      "total_time": 115,
-      "description": "Shared from a Southern recipe...",
+      "id": 4497,
+      "title": "Pumpkin Pie Overnight Oats",
+      "cuisine": "Overnight Oats",
+      "rating": 5,
+      "prep_time": 10,
+      "cook_time": null,
+      "total_time": 490,
+      "description": "Warm spices and a hint of brown sugar mixed with pumpkin add a fall flavor to these overnight oats. This grab-and-go breakfast tastes like Thanksgiving pie.",
       "nutrients": {
-        "calories": "389 kcal",
+        "calories": "264 kcal",
+        "fatContent": "5 g",
+        "fiberContent": "6 g",
+        "sugarContent": "11 g",
+        "sodiumContent": "203 mg",
+        "proteinContent": "7 g",
         "carbohydrateContent": "48 g",
-        "cholesterolContent": "78 mg",
-        "fiberContent": "3 g",
-        "proteinContent": "5 g",
-        "saturatedFatContent": "10 g",
-        "sodiumContent": "254 mg",
-        "sugarContent": "28 g",
-        "fatContent": "21 g"
+        "saturatedFatContent": "1 g",
+        "unsaturatedFatContent": "0 g"
       },
-      "serves": "8 servings"
-    }
-
+      "serves": "1 serving"
+    },
+    ...
   ]
 }
 ```
