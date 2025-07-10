@@ -24,7 +24,7 @@ DB_PASSWORD=<ENTER PASSWORD>
 
 ```bash
 python -m venv venv
-source venv/Scripts/activate  # On Windows
+source venv/Scripts/activate  
 ```
 
 ### 2. Install Dependencies
