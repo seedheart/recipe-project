@@ -48,9 +48,7 @@ CREATE DATABASE recipes_db;
 python scripts/create_tables.py
 ```
 
----
-
-## Load Recipe Data
+### Load Recipe Data
 
 Run the script to parse and load data from `data/recipes.json`:
 
@@ -58,9 +56,7 @@ Run the script to parse and load data from `data/recipes.json`:
 python scripts/load_data.py
 ```
 
----
-
-## Start Backend Server
+### Start Backend Server
 
 ```bash
 uvicorn main:app --reload
@@ -68,6 +64,139 @@ uvicorn main:app --reload
 
 - API Docs: http://localhost:8000/docs
 - Base Endpoint: http://localhost:8000/api/recipes
+
+---
+
+## API Reference
+
+### `GET /api/recipes`
+
+Returns a list of recipes with pagination.
+
+#### Parameters
+
+| Name   | Type   | Description                  | Required | Example |
+|--------|--------|------------------------------|----------|---------|
+| page   | int    | Page number (starts at 1)     | No       | `1`     |
+| limit  | int    | Number of recipes per page    | No       | `10`    |
+
+#### 📤 Example Request
+
+```http
+GET /api/recipes?page=1&limit=10
+```
+
+#### Example Response
+
+```json
+{
+  "page": 1,
+  "limit": 10,
+  "total": 50
+  "data": [
+    {
+      "id": 1,
+      "title": "Sweet Potato Pie",
+      "cuisine": "Southern Recipes",
+      "rating": 4.8,
+      "prep_time": 15,
+      "cook_time": 100,
+      "total_time": 115,
+      "description": "Shared from a Southern recipe...",
+      "nutrients": {
+        "calories": "389 kcal",
+        "carbohydrateContent": "48 g",
+        "cholesterolContent": "78 mg",
+        "fiberContent": "3 g",
+        "proteinContent": "5 g",
+        "saturatedFatContent": "10 g",
+        "sodiumContent": "254 mg",
+        "sugarContent": "28 g",
+        "fatContent": "21 g"
+      },
+      "serves": "8 servings"
+    }
+  ],
+}
+```
+
+#### Response Fields
+
+- `page`: Current page number
+- `limit`: Recipes per page
+- `total`: Total number of matching recipes
+- `data`: List of recipe objects
+
+### `GET /api/recipes/search`
+
+Returns filtered recipes based on search criteria.
+
+#### Query Parameters
+
+| Name        | Type     | Description                                   | Example     |
+|-------------|----------|-----------------------------------------------|-------------|
+| title       | string   | Search by title (partial match)               | `pie`       |
+| cuisine     | string   | Filter by cuisine (exact match)               | `Peach Cake`|
+| calories    | string   | Comparison on calories (e.g. `<=400`)         | `<=400`     |
+| rating      | string   | Comparison on rating (e.g. `>=4.5`)           | `>=4.5`     |
+| total_time  | string   | Comparison on total time (e.g. `<=30`)        | `<=30`      |
+| serves      | string   | Exact match on number of people served        | `4`         |
+
+#### Example Request
+
+```http
+GET /api/recipes/search?title=pie&rating=>=4.5&calories=<=400
+```
+
+#### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Sweet Potato Pie",
+      "cuisine": "Southern Recipes",
+      "rating": 4.8,
+      "prep_time": 15,
+      "cook_time": 100,
+      "total_time": 115,
+      "description": "Shared from a Southern recipe...",
+      "nutrients": {
+        "calories": "389 kcal",
+        "carbohydrateContent": "48 g",
+        "cholesterolContent": "78 mg",
+        "fiberContent": "3 g",
+        "proteinContent": "5 g",
+        "saturatedFatContent": "10 g",
+        "sodiumContent": "254 mg",
+        "sugarContent": "28 g",
+        "fatContent": "21 g"
+      },
+      "serves": "8 servings"
+    }
+  ]
+}
+```
+
+#### Response Fields
+
+- `data`: List of matching recipe objects
+
+### Recipe Object Schema
+
+| Field           | Type            | Description                              |
+|----------------|------------------|------------------------------------------|
+| id             | int             | Recipe ID                                |
+| title          | string          | Name of the recipe                       |
+| cuisine        | string (optional) | Cuisine name                             |
+| rating         | float (optional) | User rating                              |
+| prep_time      | int (optional)  | Preparation time in minutes              |
+| cook_time      | int (optional)  | Cooking time in minutes                  |
+| total_time     | int (optional)  | Total time in minutes                    |
+| description    | string (optional) | Recipe description                       |
+| nutrients      | dict (optional) | Nutrition values (kcal, fat, etc.)       |
+| serves         | string (optional) | Number of servings (e.g. "4 servings")   |
 
 ---
 
