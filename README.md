@@ -1,8 +1,7 @@
 # Recipe Project
 This project provides a full-stack solution for parsing a JSON dataset of recipes, storing them in a PostgreSQL database, exposing them via a RESTful API, and rendering them in a modern, filterable frontend UI.
 
-Demo:
-https://github.com/user-attachments/assets/658e1fa6-c13a-4c0a-a81d-72eae2b61333
+Demo: https://github.com/user-attachments/assets/59dae692-9869-4e29-b636-21cddc35850e
 
 ---
 
