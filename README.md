@@ -10,7 +10,7 @@ https://github.com/user-attachments/assets/658e1fa6-c13a-4c0a-a81d-72eae2b61333
 
 ### Pre requisites
 - Clone the repository to your system
-- Install PostgreSQL, Python, NodeJS
+- Install PostgreSQL, Python, NodeJS (for frontend)
 - cd into the backend folder
 - Create a `.env` file and add the following content:
 ```bash
@@ -67,7 +67,27 @@ uvicorn main:app --reload
 
 ---
 
+## Frontend Setup (React + Vite + TailwindCSS)
+
+### 1. Install Node Modules
+
+```bash
+cd frontend
+npm install
+```
+
+### 2. Start Frontend Dev Server
+
+```bash
+npm run dev
+```
+
+- Open in browser: http://localhost:5173
+---
+
 ## API Reference
+
+You can test the API using Swagger UI, Postman, Curl or your browser.
 
 ### `GET /api/recipes`
 
@@ -80,7 +100,7 @@ Returns a list of recipes with pagination.
 | page   | int    | Page number (starts at 1)     | No       | `1`     |
 | limit  | int    | Number of recipes per page    | No       | `10`    |
 
-#### 📤 Example Request
+#### Example Request
 
 ```http
 GET /api/recipes?page=1&limit=10
@@ -140,18 +160,22 @@ Returns filtered recipes based on search criteria.
 | calories    | string   | Comparison on calories (e.g. `<=400`)         | `<=400`     |
 | rating      | string   | Comparison on rating (e.g. `>=4.5`)           | `>=4.5`     |
 | total_time  | string   | Comparison on total time (e.g. `<=30`)        | `<=30`      |
-| serves      | string   | Exact match on number of people served        | `4`         |
+| page        | int      | Page number (starts at 1)                     | `1`         |
+| limit       | int      | Number of recipes per page                    | `15`        |
 
 #### Example Request
 
 ```http
-GET /api/recipes/search?title=pie&rating=>=4.5&calories=<=400
+GET /api/recipes/search?title=pie&rating=>=4.5&calories=<=400&page=1&limit=15
 ```
 
 #### Example Response
 
 ```json
 {
+  "page": 1,
+  "limit": 15,
+  "total": 50
   "data": [
     {
       "id": 1,
@@ -175,12 +199,15 @@ GET /api/recipes/search?title=pie&rating=>=4.5&calories=<=400
       },
       "serves": "8 servings"
     }
+
   ]
 }
 ```
 
 #### Response Fields
-
+- `page`: Current page number
+- `limit`: Recipes per page
+- `total`: Total number of matching recipes
 - `data`: List of matching recipe objects
 
 ### Recipe Object Schema
@@ -199,69 +226,10 @@ GET /api/recipes/search?title=pie&rating=>=4.5&calories=<=400
 | serves         | string (optional) | Number of servings (e.g. "4 servings")   |
 
 ---
-
-## API Testing
-
-You can test the API using Swagger UI, Postman, Curl or your browser.
-
-### 1. Get All Recipes (Paginated)
-
-```http
-GET /api/recipes?page=1&limit=10
-```
-
-**Response:**
-
-```json
-{
-  "page": 1,
-  "limit": 10,
-  "total": 50
-  "data": [ ... ],
-}
-```
-
----
-
-### 2. Search Recipes with Filters
-
-```http
-GET /api/recipes/search?title=pie&rating=>=4.5&calories=<=400
-```
-
-**Response:**
-
-```json
-{
-  "data": [ { ...matching recipes... } ]
-}
-```
-
----
-
-## Frontend Setup (React + Vite + TailwindCSS)
-
-### 1. Install Node Modules
-
-```bash
-cd frontend
-npm install
-```
-
-### 2. Start Frontend Dev Server
-
-```bash
-npm run dev
-```
-
-- Open in browser: http://localhost:5173
-
----
-
 ## Screenshots
 ![Screenshot 2025-07-10 115847](https://github.com/user-attachments/assets/c09be58d-0f71-4c8b-ae4c-da26a2372750)
 ---
-![Screenshot 2025-07-10 120031](https://github.com/user-attachments/assets/f6def230-952d-4ca5-866a-c54ded024421)
+![Screenshot 2025-07-10 160006](https://github.com/user-attachments/assets/5a76d39b-3d00-46f6-9f67-7f67e852fcad)
 ---
 ![Screenshot 2025-07-10 120119](https://github.com/user-attachments/assets/1aedd7fc-31b7-4770-bc6b-50cddb75f6ad)
 
