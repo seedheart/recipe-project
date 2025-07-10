@@ -127,9 +127,10 @@ npm run dev
 ---
 
 ## Screenshots
+![Screenshot 2025-07-10 115847](https://github.com/user-attachments/assets/c09be58d-0f71-4c8b-ae4c-da26a2372750)
+---
+![Screenshot 2025-07-10 120031](https://github.com/user-attachments/assets/f6def230-952d-4ca5-866a-c54ded024421)
+---
+![Screenshot 2025-07-10 120119](https://github.com/user-attachments/assets/1aedd7fc-31b7-4770-bc6b-50cddb75f6ad)
 
-_Add screenshots of:_
-- Home page with table
-- Search in action
-- Drawer opened with recipe detail
-- No results fallback message
+
