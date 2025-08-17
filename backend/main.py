@@ -59,7 +59,7 @@ def get_recipes(
     total = db.query(func.count(Recipe.id)).scalar()
     recipes = (
         db.query(Recipe)
-        .order_by(Recipe.rating.desc().nullslast())
+        .order_by(Recipe.rating.desc().nullslast(), Recipe.id.asc())
         .offset(skip)
         .limit(limit)
         .all()
@@ -111,9 +111,10 @@ def search_recipes(
     if title:
         filters.append(Recipe.title.ilike(f"%{title}%"))
 
-    # Cuisine exact match
+    # Cuisine match
     if cuisine:
-        filters.append(Recipe.cuisine == cuisine)
+        # filters.append(Recipe.cuisine == cuisine)
+        filters.append(Recipe.cuisine.ilike(f"%{cuisine}%"))
 
     skip = (page - 1) * limit
     total = db.query(func.count(Recipe.id)).filter(and_(*filters)).scalar()
@@ -121,7 +122,7 @@ def search_recipes(
     recipes = (
         db.query(Recipe)
         .filter(and_(*filters))
-        .order_by(Recipe.rating.desc().nullslast())
+        .order_by(Recipe.rating.desc().nullslast(), Recipe.id.asc())
         .offset(skip)
         .limit(limit)
         .all()
